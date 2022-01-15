@@ -1,15 +1,15 @@
 version: '2'
 
 services:
-  bitcoin:
+  unobtanium:
     extends:
       file: docker-compose.tmpl.yml
-      service: bitcoin-base-mainnet
+      service: unobtanium-base-mainnet
 
-  bitcoin-testnet:
+  unobtanium-testnet:
     extends:
       file: docker-compose.tmpl.yml
-      service: bitcoin-base-testnet
+      service: unobtanium-base-testnet
 
   addrindexrs:
     extends:
@@ -21,23 +21,23 @@ services:
       file: docker-compose.tmpl.yml
       service: addrindexrs-base-testnet
 
-  counterparty:
+  unoparty:
     extends:
       file: docker-compose.tmpl.yml
-      service: counterparty-base-mainnet
+      service: unoparty-base-mainnet
     links:
-      - bitcoin
+      - unobtanium
       - addrindexrs
 
-  counterparty-testnet:
+  unoparty-testnet:
     extends:
       file: docker-compose.tmpl.yml
-      service: counterparty-base-testnet
+      service: unoparty-base-testnet
     links:
-      - bitcoin-testnet
+      - unobtanium-testnet
       - addrindexrs-testnet
 
 volumes:
-  bitcoin-data:
+  unobtanium-data:
   addrindexrs-data:
-  counterparty-data:
+  unoparty-data:

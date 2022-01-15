@@ -1,15 +1,15 @@
 version: '2'
 
 services:
-  bitcoin:
+  unobtanium:
     extends:
       file: docker-compose.tmpl.yml
-      service: bitcoin-base-mainnet
+      service: unobtanium-base-mainnet
 
-  bitcoin-testnet:
+  unobtanium-testnet:
     extends:
       file: docker-compose.tmpl.yml
-      service: bitcoin-base-testnet
+      service: unobtanium-base-testnet
 
   addrindexrs:
     extends:
@@ -21,20 +21,20 @@ services:
       file: docker-compose.tmpl.yml
       service: addrindexrs-base-testnet
 
-  counterparty:
+  unoparty:
     extends:
       file: docker-compose.tmpl.yml
-      service: counterparty-base-mainnet
+      service: unoparty-base-mainnet
     links:
-      - bitcoin
+      - unobtanium
       - addrindexrs
 
-  counterparty-testnet:
+  unoparty-testnet:
     extends:
       file: docker-compose.tmpl.yml
-      service: counterparty-base-testnet
+      service: unoparty-base-testnet
     links:
-      - bitcoin-testnet
+      - unobtanium-testnet
       - addrindexrs-testnet
 
   mongodb:
@@ -47,29 +47,29 @@ services:
       file: docker-compose.tmpl.yml
       service: redis-base
 
-  counterblock:
+  unoblock:
     extends:
       file: docker-compose.tmpl.yml
-      service: counterblock-base-mainnet
+      service: unoblock-base-mainnet
     links:
-      - bitcoin
-      - counterparty
+      - unobtanium
+      - unoparty
       - mongodb
       - redis
 
-  counterblock-testnet:
+  unoblock-testnet:
     extends:
       file: docker-compose.tmpl.yml
-      service: counterblock-base-testnet
+      service: unoblock-base-testnet
     links:
-      - bitcoin-testnet
-      - counterparty-testnet
+      - unobtanium-testnet
+      - unoparty-testnet
       - mongodb
       - redis
 
 volumes:
-  bitcoin-data:
+  unobtanium-data:
   addrindexrs-data:
-  counterparty-data:
-  counterblock-data:
+  unoparty-data:
+  unoblock-data:
   mongodb-data:

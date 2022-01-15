@@ -1,12 +1,12 @@
 [Default]
 testnet=1
 rpc-host=0.0.0.0
-backend-connect=bitcoin-testnet
+backend-connect=unobtanium-testnet
 backend-user=rpc
 backend-password=rpc
-counterparty-connect=counterparty-testnet
-counterparty-user=rpc
-counterparty-password=rpc
+unoparty-connect=unoparty-testnet
+unoparty-user=rpc
+unoparty-password=rpc
 mongodb-connect=mongodb
 redis-connect=redis
 tx-log-file

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-fednode.py: script to set up and manage a Counterparty federated node
+fednode.py: script to set up and manage a Unoparty federated node
 '''
 
 import sys
@@ -26,60 +26,60 @@ SCRIPTDIR = os.path.dirname(os.path.realpath(__file__))
 FEDNODE_CONFIG_FILE = ".fednode.config"
 FEDNODE_CONFIG_PATH = os.path.join(SCRIPTDIR, FEDNODE_CONFIG_FILE)
 
-REPO_BASE_HTTPS = "https://github.com/CounterpartyXCP/{}.git"
-REPO_BASE_SSH = "git@github.com:CounterpartyXCP/{}.git"
-REPOS_BASE = ['counterparty-lib', 'counterparty-cli', 'addrindexrs']
-REPOS_COUNTERBLOCK = REPOS_BASE + ['counterblock', ]
-REPOS_FULL = REPOS_COUNTERBLOCK + ['counterwallet', 'armory-utxsvr', 'xcp-proxy']
+REPO_BASE_HTTPS = "https://github.com/terhnt/{}.git"
+REPO_BASE_SSH = "git@github.com:terhnt/{}.git"
+REPOS_BASE = ['unoparty-lib', 'unoparty-cli', 'addrindexrs']
+REPOS_UNOBLOCK = REPOS_BASE + ['unoblock', ]
+REPOS_FULL = REPOS_UNOBLOCK + ['unowallet', 'armory-utxsvr', 'xup-proxy']
 
 HOST_PORTS_USED = {
-    'base': [8332, 18332, 8432, 18432, 4000, 14000],
-    'base_extbtc': [8432, 18432, 4000, 14000],
-    'counterblock': [8332, 18332, 8432, 18432, 4000, 14000, 4100, 14100, 27017],
-    'full': [8332, 18332, 8432, 18432, 4000, 14000, 4100, 14100, 80, 443, 27017]
+    'base': [65535, 65531, 8122, 18122, 4120, 14120],
+    'base_extbtc': [8122, 18122, 4120, 14120],
+    'unoblock': [65535, 65531, 8122, 18122, 4120, 14120, 4420, 14420, 27017],
+    'full': [65535, 65531, 8122, 18122, 4120, 14120, 4420, 14420, 80, 443, 27017]
 }
 VOLUMES_USED = {
-    'base': ['bitcoin-data', 'addrindexrs-data', 'counterparty-data'],
-    'base_extbtc': ['addrindexrs-data', 'counterparty-data'],
-    'counterblock': ['bitcoin-data', 'addrindexrs-data', 'counterparty-data', 'counterblock-data', 'mongodb-data'],
-    'full': ['bitcoin-data', 'addrindexrs-data', 'counterparty-data', 'counterblock-data', 'mongodb-data', 'armory-data', 'xcp-proxy']
+    'base': ['unobtanium-data', 'addrindexrs-data', 'unoparty-data'],
+    'base_extbtc': ['addrindexrs-data', 'unoparty-data'],
+    'unoblock': ['unobtanium-data', 'addrindexrs-data', 'unoparty-data', 'unoblock-data', 'mongodb-data'],
+    'full': ['unobtanium-data', 'addrindexrs-data', 'unoparty-data', 'unoblock-data', 'mongodb-data', 'armory-data', 'xup-proxy']
 }
 UPDATE_CHOICES = ['addrindexrs', 'addrindexrs-testnet',
-                  'counterparty', 'counterparty-testnet', 'counterblock',
-                  'counterblock-testnet', 'counterwallet', 'armory-utxsvr',
-                  'armory-utxsvr-testnet', 'xcp-proxy', 'xcp-proxy-testnet']
-REPARSE_CHOICES = ['counterparty', 'counterparty-testnet', 'counterblock', 'counterblock-testnet']
-ROLLBACK_CHOICES = ['counterparty', 'counterparty-testnet']
-VACUUM_CHOICES = ['counterparty', 'counterparty-testnet']
-SHELL_CHOICES = UPDATE_CHOICES + ['mongodb', 'redis', 'bitcoin', 'bitcoin-testnet', 'addrindexrs', 'addrindexrs-testnet']
+                  'unoparty', 'unoparty-testnet', 'unoblock',
+                  'unoblock-testnet', 'unowallet', 'armory-utxsvr',
+                  'armory-utxsvr-testnet', 'xup-proxy', 'xup-proxy-testnet']
+REPARSE_CHOICES = ['unoparty', 'unoparty-testnet', 'unoblock', 'unoblock-testnet']
+ROLLBACK_CHOICES = ['unoparty', 'unoparty-testnet']
+VACUUM_CHOICES = ['unoparty', 'unoparty-testnet']
+SHELL_CHOICES = UPDATE_CHOICES + ['mongodb', 'redis', 'unobtanium', 'unobtanium-testnet', 'addrindexrs', 'addrindexrs-testnet']
 
-CONFIGCHECK_FILES_BASE_EXTERNAL_BITCOIN = [
+CONFIGCHECK_FILES_BASE_EXTERNAL_UNOBTANIUM = [
     ['addrindexrs', 'addrindexrs.env.default', 'addrindexrs.env'],
     ['addrindexrs', 'addrindexrs.testnet.env.default', 'addrindexrs.testnet.env'],
-    ['counterparty', 'client.conf.default', 'client.conf'],
-    ['counterparty', 'client.testnet.conf.default', 'client.testnet.conf'],
-    ['counterparty', 'server.conf.default', 'server.conf'],
-    ['counterparty', 'server.testnet.conf.default', 'server.testnet.conf'],
+    ['unoparty', 'client.conf.default', 'client.conf'],
+    ['unoparty', 'client.testnet.conf.default', 'client.testnet.conf'],
+    ['unoparty', 'server.conf.default', 'server.conf'],
+    ['unoparty', 'server.testnet.conf.default', 'server.testnet.conf'],
 ];
 CONFIGCHECK_FILES_BASE = [
-    ['bitcoin', 'bitcoin.conf.default', 'bitcoin.conf'],
-    ['bitcoin', 'bitcoin.testnet.conf.default', 'bitcoin.testnet.conf'],
+    ['unobtanium', 'unobtanium.conf.default', 'unobtanium.conf'],
+    ['unobtanium', 'unobtanium.testnet.conf.default', 'unobtanium.testnet.conf'],
     ['addrindexrs', 'addrindexrs.env.default', 'addrindexrs.env'],
     ['addrindexrs', 'addrindexrs.testnet.env.default', 'addrindexrs.testnet.env'],
-    ['counterparty', 'client.conf.default', 'client.conf'],
-    ['counterparty', 'client.testnet.conf.default', 'client.testnet.conf'],
-    ['counterparty', 'server.conf.default', 'server.conf'],
-    ['counterparty', 'server.testnet.conf.default', 'server.testnet.conf'],
+    ['unoparty', 'client.conf.default', 'client.conf'],
+    ['unoparty', 'client.testnet.conf.default', 'client.testnet.conf'],
+    ['unoparty', 'server.conf.default', 'server.conf'],
+    ['unoparty', 'server.testnet.conf.default', 'server.testnet.conf'],
 ];
-CONFIGCHECK_FILES_COUNTERBLOCK = CONFIGCHECK_FILES_BASE + [
-    ['counterblock', 'server.conf.default', 'server.conf'],
-    ['counterblock', 'server.testnet.conf.default', 'server.testnet.conf'],
+CONFIGCHECK_FILES_UNOBLOCK = CONFIGCHECK_FILES_BASE + [
+    ['unoblock', 'server.conf.default', 'server.conf'],
+    ['unoblock', 'server.testnet.conf.default', 'server.testnet.conf'],
 ]
-CONFIGCHECK_FILES_FULL = CONFIGCHECK_FILES_COUNTERBLOCK;
+CONFIGCHECK_FILES_FULL = CONFIGCHECK_FILES_UNOBLOCK;
 CONFIGCHECK_FILES = {
-    'base_extbtc': CONFIGCHECK_FILES_BASE_EXTERNAL_BITCOIN,
+    'base_extbtc': CONFIGCHECK_FILES_BASE_EXTERNAL_UNOBTANIUM,
     'base': CONFIGCHECK_FILES_BASE,
-    'counterblock': CONFIGCHECK_FILES_COUNTERBLOCK,
+    'unoblock': CONFIGCHECK_FILES_UNOBLOCK,
     'full': CONFIGCHECK_FILES_FULL,
 }
 # set in setup_env()
@@ -100,7 +100,7 @@ def parse_args():
     subparsers.required = True
 
     parser_install = subparsers.add_parser('install', help="install fednode services")
-    parser_install.add_argument("config", choices=['base', 'base_extbtc', 'counterblock', 'full'], help="The name of the service configuration to utilize")
+    parser_install.add_argument("config", choices=['base', 'base_extbtc', 'unoblock', 'full'], help="The name of the service configuration to utilize")
     parser_install.add_argument("branch", choices=['master', 'develop'], help="The name of the git branch to utilize for the build (note that 'master' pulls the docker 'latest' tags)")
     parser_install.add_argument("--use-ssh-uris", action="store_true", help="Use SSH URIs for source checkouts from Github, instead of HTTPS URIs")
     parser_install.add_argument("--mongodb-interface", default="127.0.0.1",
@@ -117,14 +117,14 @@ def parse_args():
     parser_restart = subparsers.add_parser('restart', help="restart fednode services")
     parser_restart.add_argument("services", nargs='*', default='', help="The service or services to restart (or blank for all services)")
 
-    parser_reparse = subparsers.add_parser('reparse', help="reparse a counterparty-server or counterblock service")
+    parser_reparse = subparsers.add_parser('reparse', help="reparse a unoparty-server or unoblock service")
     parser_reparse.add_argument("service", choices=REPARSE_CHOICES, help="The name of the service for which to kick off a reparse")
 
-    parser_rollback = subparsers.add_parser('rollback', help="rollback a counterparty-server")
+    parser_rollback = subparsers.add_parser('rollback', help="rollback a unoparty-server")
     parser_rollback.add_argument("block_index", help="the index of the last known good block")
     parser_rollback.add_argument("service", choices=ROLLBACK_CHOICES, help="The name of the service to rollback")
 
-    parser_vacuum = subparsers.add_parser('vacuum', help="vacuum the counterparty-server database for better runtime performance")
+    parser_vacuum = subparsers.add_parser('vacuum', help="vacuum the unoparty-server database for better runtime performance")
     parser_vacuum.add_argument("service", choices=VACUUM_CHOICES, help="The name of the service whose database to vacuum")
 
     parser_ps = subparsers.add_parser('ps', help="list installed services")
@@ -320,7 +320,7 @@ def main():
                 sys.exit(1)
 
         # check out the necessary source trees (don't use submodules due to detached HEAD and other problems)
-        REPOS = REPOS_BASE if build_config == 'base' else (REPOS_COUNTERBLOCK if build_config == 'counterblock' else REPOS_FULL)
+        REPOS = REPOS_BASE if build_config == 'base' else (REPOS_UNOBLOCK if build_config == 'unoblock' else REPOS_FULL)
         for repo in REPOS:
             repo_url = REPO_BASE_SSH.format(repo) if args.use_ssh_uris else REPO_BASE_HTTPS.format(repo)
             repo_dir = os.path.join(SCRIPTDIR, "src", repo)
@@ -417,8 +417,8 @@ def main():
             service_base = service.replace('-testnet', '')
             if service_base not in git_has_updated:
                 git_has_updated.append(service_base)
-                if service_base == 'counterparty':  # special case
-                    service_dirs = [os.path.join(SCRIPTDIR, "src", "counterparty-lib"), os.path.join(SCRIPTDIR, "src", "counterparty-cli")]
+                if service_base == 'unoparty':  # special case
+                    service_dirs = [os.path.join(SCRIPTDIR, "src", "unoparty-lib"), os.path.join(SCRIPTDIR, "src", "unoparty-cli")]
                 else:
                     service_dirs = [service_base,]
                 for service_dir in service_dirs:
@@ -436,7 +436,7 @@ def main():
                         os.system(git_cmd)
 
                     # delete installed egg (to force egg recreate and deps re-check on next start)
-                    if service_base in ('counterparty', 'counterblock', 'armory-utxsvr'):
+                    if service_base in ('unoparty', 'unoblock', 'armory-utxsvr'):
                         for path in glob.glob(os.path.join(service_dir_path, "*.egg-info")):
                             print("Removing egg path {}".format(path))
                             if not IS_WINDOWS:  # have to use root
@@ -444,12 +444,12 @@ def main():
                             else:
                                 shutil.rmtree(path)
 
-                if service_base == 'counterwallet' and os.path.exists(os.path.join(SCRIPTDIR, "src", "counterwallet")):  # special case
+                if service_base == 'unowallet' and os.path.exists(os.path.join(SCRIPTDIR, "src", "unowallet")):  # special case
                     transifex_cfg_path = os.path.join(os.path.expanduser("~"), ".transifex")
                     if os.path.exists(transifex_cfg_path):
-                        os.system("{} docker cp {} federatednode_counterwallet_1:/root/.transifex".format(SUDO_CMD, transifex_cfg_path))
-                    os.system("{} docker exec -i -t federatednode_counterwallet_1 bash -c \"cd /counterwallet/src ".format(SUDO_CMD) +
-                              "&& bower --allow-root update && cd /counterwallet && npm update && grunt build\"")
+                        os.system("{} docker cp {} federatednode_unowallet_1:/root/.transifex".format(SUDO_CMD, transifex_cfg_path))
+                    os.system("{} docker exec -i -t federatednode_unowallet_1 bash -c \"cd /unowallet/src ".format(SUDO_CMD) +
+                              "&& bower --allow-root update && cd /unowallet && npm update && grunt build\"")
                     if not os.path.exists(transifex_cfg_path):
                         print("NOTE: Did not update locales because there is no .transifex file in your home directory")
                         print("If you want locales compiled, sign up for transifex and create this file to" +

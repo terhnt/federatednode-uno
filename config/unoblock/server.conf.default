@@ -1,11 +1,11 @@
 [Default]
 rpc-host=0.0.0.0
-backend-connect=bitcoin
+backend-connect=unobtanium
 backend-user=rpc
 backend-password=rpc
-counterparty-connect=counterparty
-counterparty-user=rpc
-counterparty-password=rpc
+unoparty-connect=unoparty
+unoparty-user=rpc
+unoparty-password=rpc
 mongodb-connect=mongodb
 redis-connect=redis
 tx-log-file

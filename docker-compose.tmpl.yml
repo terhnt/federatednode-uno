@@ -1,44 +1,44 @@
 version: '2'
 
 # Data volumes defined in these services (which must be defined in child templates):
-# bitcoin-data
-# counterparty-data
-# counterblock-data
+# unobtanium-data
+# unoparty-data
+# unoblock-data
 # armory-data
 # mongodb-data
 
 services:
-  bitcoin-base:
+  unobtanium-base:
     build:
-      context: ./extras/docker/bitcoin
+      context: ./extras/docker/unobtanium
     volumes:
-      - ./config/bitcoin:/root/.bitcoin-config
-      - bitcoin-data:/root/.bitcoin/
+      - ./config/unobtanium:/root/.unobtanium-config
+      - unobtanium-data:/root/.unobtanium/
     logging:
       driver: "json-file"
       options:
         max-size: "30m"
         max-file: "30"
 
-  bitcoin-base-mainnet:
+  unobtanium-base-mainnet:
     hostname: ${HOSTNAME_BASE}-bc
     extends:
-      service: bitcoin-base
+      service: unobtanium-base
     ports:
-      - "8332:8332"
-      - "28832:28832"
+      - "65535:65535"
+      - "48832:48832"
     environment:
-      - PARAMS=-conf=/root/.bitcoin-config/bitcoin.conf
+      - PARAMS=-conf=/root/.unobtanium-config/unobtanium.conf
 
-  bitcoin-base-testnet:
+  unobtanium-base-testnet:
     hostname: ${HOSTNAME_BASE}-bc-t
     extends:
-      service: bitcoin-base
+      service: unobtanium-base
     ports:
-      - "18332:18332"
-      - "38832:38832"
+      - "65531:65531"
+      - "58832:58832"
     environment:
-      - PARAMS=-conf=/root/.bitcoin-config/bitcoin.testnet.conf
+      - PARAMS=-conf=/root/.unobtanium-config/unobtanium.testnet.conf
 
   addrindexrs-base:
     build:
@@ -63,90 +63,90 @@ services:
     extends:
       service: addrindexrs-base
     ports:
-      - "8432:8432"
+      - "8122:8122"
     environment:
-      - "ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:8432"
-      - "ADDRINDEXRS_DAEMON_RPC_ADDR=bitcoin:8332"
+      - "ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:8122"
+      - "ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium:65535"
 
   addrindexrs-base-testnet:
     hostname: ${HOSTNAME_BASE}-idxd-t
     extends:
       service: addrindexrs-base
     ports:
-      - "18432:18432"
+      - "18122:18122"
     environment:
-      - "ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:18432"
+      - "ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:18122"
       - ADDRINDEXRS_NETWORK=testnet
-      - "ADDRINDEXRS_DAEMON_RPC_ADDR=bitcoin-testnet:18332"
+      - "ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium-testnet:18122"
 
-  counterparty-base:
+  unoparty-base:
     build:
-      context: ./src/counterparty-lib
+      context: ./src/unoparty-lib
     volumes:
-      - ./config/counterparty:/root/.config/counterparty
-      - counterparty-data:/root/.local/share/counterparty
+      - ./config/unoparty:/root/.config/unoparty
+      - unoparty-data:/root/.local/share/unoparty
     logging:
       driver: "json-file"
       options:
         max-size: "30m"
         max-file: "50"
 
-  counterparty-base-mainnet:
+  unoparty-base-mainnet:
     hostname: ${HOSTNAME_BASE}-cp
     extends:
-      service: counterparty-base
+      service: unoparty-base
     ports:
-      - "4000:4000"
+      - "4120:4120"
     environment:
-      - PARAMS=--config-file=/root/.config/counterparty/server.conf
+      - PARAMS=--config-file=/root/.config/unoparty/server.conf
 
-  counterparty-base-testnet:
+  unoparty-base-testnet:
     hostname: ${HOSTNAME_BASE}-cp-t
     extends:
-      service: counterparty-base
+      service: unoparty-base
     ports:
-      - "14000:14000"
+      - "14120:14120"
     environment:
-      - PARAMS=--config-file=/root/.config/counterparty/server.testnet.conf
+      - PARAMS=--config-file=/root/.config/unoparty/server.testnet.conf
 
-  counterblock-base:
+  unoblock-base:
     build:
-      context: ./src/counterblock
+      context: ./src/unoblock
     volumes:
-      - ./config/counterblock:/root/.config/counterblock
-      - counterblock-data:/root/.local/share/counterblock
+      - ./config/unoblock:/root/.config/unoblock
+      - unoblock-data:/root/.local/share/unoblock
     logging:
       driver: "json-file"
       options:
         max-size: "30m"
         max-file: "50"
 
-  counterblock-base-mainnet:
+  unoblock-base-mainnet:
     hostname: ${HOSTNAME_BASE}-cb
     extends:
-      service: counterblock-base
+      service: unoblock-base
     ports:
-      - "4100:4100"
+      - "4420:4420"
     environment:
-      - PARAMS=--config-file=/root/.config/counterblock/server.conf
+      - PARAMS=--config-file=/root/.config/unoblock/server.conf
 
-  counterblock-base-testnet:
+  unoblock-base-testnet:
     hostname: ${HOSTNAME_BASE}-cb-t
     extends:
-      service: counterblock-base
+      service: unoblock-base
     ports:
-      - "14100:14100"
-      - "14101:14101"
-      - "14102:14102"
+      - "14420:14420"
+      - "14421:14421"
+      - "14422:14422"
     environment:
-      - PARAMS=--config-file=/root/.config/counterblock/server.testnet.conf
+      - PARAMS=--config-file=/root/.config/unoblock/server.testnet.conf
 
   armory-utxsvr-base:
-    image: counterparty/armory-utxsvr:${FEDNODE_RELEASE_TAG}
+    image: unoparty/armory-utxsvr:${FEDNODE_RELEASE_TAG}
     volumes:
       - ./src/armory-utxsvr:/armory-utxsvr
       - armory-data:/root/.armory
-      - bitcoin-data:/root/.bitcoin/
+      - unobtanium-data:/root/.unobtanium/
     logging:
       driver: "json-file"
       options:
@@ -158,7 +158,7 @@ services:
     extends:
       service: armory-utxsvr-base
     environment:
-      - BITCOIND_URL=http://rpc:rpc@bitcoin:8332
+      - UNOBTANIUMD_URL=http://unobtaniumrpc:rpc@unobtanium:65535
       - RPC_HOST=0.0.0.0
 
   armory-utxsvr-base-testnet:
@@ -166,17 +166,17 @@ services:
     extends:
       service: armory-utxsvr-base
     environment:
-      - BITCOIND_URL=http://rpc:rpc@bitcoin-testnet:18332
+      - UNOBTANIUMD_URL=http://unobtaniumrpc:rpc@unobtanium-testnet:65531
       - RPC_HOST=0.0.0.0
       - PARAMS=--testnet
 
-  counterwallet-base:
+  unowallet-base:
     hostname: ${HOSTNAME_BASE}-cw
     build:
-      context: ./src/counterwallet
+      context: ./src/unowallet
     volumes:
-      - ./config/counterwallet/ssl:/ssl_config
-      - counterblock-data:/counterblock_data
+      - ./config/unowallet/ssl:/ssl_config
+      - unoblock-data:/unoblock_data
     logging:
       driver: "json-file"
       options:
@@ -211,42 +211,42 @@ services:
         max-size: "30m"
         max-file: "30"
 
-  xcp-proxy-base:
+  xup-proxy-base:
     build:
-      context: ./src/xcp-proxy
+      context: ./src/xup-proxy
       dockerfile: ./Dockerfile
     volumes:
-      - ./config/xcp-proxy:/root/.config/xcp-proxy
+      - ./config/xup-proxy:/root/.config/xup-proxy
     logging:
       driver: "json-file"
       options:
         max-size: "30m"
         max-file: "30"
     environment:
-      - INTERVAL_CHECK_COUNTERPARTY_PARSED=1000
+      - INTERVAL_CHECK_UNOPARTY_PARSED=1000
 
-  xcp-proxy-base-mainnet:
+  xup-proxy-base-mainnet:
     hostname: ${HOSTNAME_BASE}-prx
     extends:
-      service: xcp-proxy-base
+      service: xup-proxy-base
     ports:
-      - "8097:8097"
+      - "8197:8197"
     environment:
-      - HTTP_PORT=8097
-      - ADDRINDEXRS_URL=tcp://addrindexrs:8432
-      - BITCOIN_ZMQ_URL=tcp://bitcoin:28832
+      - HTTP_PORT=8197
+      - ADDRINDEXRS_URL=tcp://addrindexrs:8122
+      - UNOBTANIUM_ZMQ_URL=tcp://unobtanium:28535
       - REDIS_URL=redis://redis:6379/8
-      - SECRETS_PATH=/root/.config/xcp-proxy/secrets
+      - SECRETS_PATH=/root/.config/xup-proxy/secrets
 
-  xcp-proxy-base-testnet:
+  xup-proxy-base-testnet:
     hostname: ${HOSTNAME_BASE}-prx-t
     extends:
-      service: xcp-proxy-base
+      service: xup-proxy-base
     ports:
-      - "18097:18097"
+      - "18197:18197"
     environment:
-      - HTTP_PORT=18097
-      - ADDRINDEXRS_URL=tcp://addrindexrs-testnet:8432
-      - BITCOIN_ZMQ_URL=tcp://bitcoin-testnet:38832
+      - HTTP_PORT=18197
+      - ADDRINDEXRS_URL=tcp://addrindexrs-testnet:18122
+      - UNOBTANIUM_ZMQ_URL=tcp://unobtanium-testnet:38535
       - REDIS_URL=redis://redis:6379/9
-      - SECRETS_PATH=/root/.config/xcp-proxy/secrets-testnet
+      - SECRETS_PATH=/root/.config/xup-proxy/secrets-testnet

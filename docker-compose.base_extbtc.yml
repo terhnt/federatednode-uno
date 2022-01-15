@@ -11,20 +11,20 @@ services:
       file: docker-compose.tmpl.yml
       service: addrindexrs-base-testnet
 
-  counterparty:
+  unoparty:
     extends:
       file: docker-compose.tmpl.yml
-      service: counterparty-base-mainnet
+      service: unoparty-base-mainnet
     links:
       - addrindexrs
 
-  counterparty-testnet:
+  unoparty-testnet:
     extends:
       file: docker-compose.tmpl.yml
-      service: counterparty-base-testnet
+      service: unoparty-base-testnet
     links:
       - addrindexrs-testnet
 
 volumes:
   addrindexrs-data:
-  counterparty-data:
+  unoparty-data:

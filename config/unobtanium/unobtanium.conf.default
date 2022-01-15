@@ -1,10 +1,10 @@
-rpcuser=rpc
+rpcuser=unobtaniumrpc
 rpcpassword=rpc
 server=1
 printtoconsole=1
 rpcallowip=0.0.0.0/0
 rpcbind=0.0.0.0
-rpcport=8332
+rpcport=65535
 rpcthreads=8
 rpcworkqueue=16
 rpctimeout=300
