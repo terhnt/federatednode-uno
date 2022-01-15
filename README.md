@@ -34,5 +34,5 @@ cd python-altcoinlib
 sudo python3 ./setup.py install
 ```
 
-You can now proceed with running 
-```python3 ./fednode.py```
+You can now proceed with instructions at (With some minor changes as the instructions on the below website are for counterparty):  
+https://counterparty.io/docs/federated_node/
