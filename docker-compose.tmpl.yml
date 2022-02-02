@@ -56,7 +56,7 @@ services:
     environment:
       - ADDRINDEXRS_JSONRPC_IMPORT=1
       - ADDRINDEXRS_TXID_LIMIT=15000
-      - "ADDRINDEXRS_COOKIE=rpc:rpc"
+      - "ADDRINDEXRS_COOKIE=unobtaniumrpc:rpc"
 
   addrindexrs-base-mainnet:
     hostname: ${HOSTNAME_BASE}-idxd
