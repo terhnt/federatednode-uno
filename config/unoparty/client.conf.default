@@ -1,5 +1,5 @@
 [Default]
 unoparty-rpc-password=rpc
 wallet-connect=unobtanium
-wallet-user=rpc
+wallet-user=unobtaniumrpc
 wallet-password=rpc
