@@ -1,10 +1,10 @@
 [Default]
 rpc-host=0.0.0.0
 backend-connect=unobtanium
-backend-user=rpc
+backend-user=unobtaniumrpc
 backend-password=rpc
 unoparty-connect=unoparty
-unoparty-user=rpc
+unoparty-user=unobtaniumrpc
 unoparty-password=rpc
 mongodb-connect=mongodb
 redis-connect=redis
