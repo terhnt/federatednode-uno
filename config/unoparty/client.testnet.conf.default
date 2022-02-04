@@ -2,6 +2,6 @@
 testnet=1
 unoparty-rpc-password=rpc
 wallet-connect=unobtanium-testnet
-wallet-user=rpc
+wallet-user=unobtaniumrpc
 wallet-password=rpc
 
