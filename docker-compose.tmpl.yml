@@ -142,7 +142,7 @@ services:
       - PARAMS=--config-file=/root/.config/unoblock/server.testnet.conf
 
   armory-utxsvr-base:
-    image: unoparty/armory-utxsvr:${FEDNODE_RELEASE_TAG}
+    image: counterparty/armory-utxsvr:${FEDNODE_RELEASE_TAG}
     volumes:
       - ./src/armory-utxsvr:/armory-utxsvr
       - armory-data:/root/.armory
