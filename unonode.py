@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 
 VERSION="2.3.0"
 
-PROJECT_NAME = "federatednodeuno"
+PROJECT_NAME = "unonode"
 CURDIR = os.getcwd()
 SCRIPTDIR = os.path.dirname(os.path.realpath(__file__))
 UNONODE_CONFIG_FILE = ".unonode.config"
@@ -203,7 +203,7 @@ def setup_env():
 
 def is_container_running(service, abort_on_not_exist=True):
     try:
-        container_running = subprocess.check_output('{} docker inspect --format="{{{{ .State.Running }}}}" federatednodeuno_{}_1'.format(SUDO_CMD, service), shell=True).decode("utf-8").strip()
+        container_running = subprocess.check_output('{} docker inspect --format="{{{{ .State.Running }}}}" unonode_{}_1'.format(SUDO_CMD, service), shell=True).decode("utf-8").strip()
         container_running = container_running == 'true'
     except subprocess.CalledProcessError:
         container_running = None
@@ -393,11 +393,11 @@ def main():
             cmd = args.cmd
         else:
             cmd = '"{}"'.format(' '.join(args.cmd).replace('"', '\\"'))
-        os.system("{} docker exec -i -t federatednodeuno_{}_1 bash -c {}".format(SUDO_CMD, args.service, cmd))
+        os.system("{} docker exec -i -t unonode_{}_1 bash -c {}".format(SUDO_CMD, args.service, cmd))
     elif args.command == 'shell':
         container_running = is_container_running(args.service)
         if container_running:
-            os.system("{} docker exec -i -t federatednodeuno_{}_1 bash".format(SUDO_CMD, args.service))
+            os.system("{} docker exec -i -t unonode_{}_1 bash".format(SUDO_CMD, args.service))
         else:
             print("Container is not running -- creating a transient container with a 'bash' shell entrypoint...")
             run_compose_cmd("run --no-deps --rm --entrypoint bash {}".format(args.service))
@@ -447,8 +447,8 @@ def main():
                 if service_base == 'unowallet' and os.path.exists(os.path.join(SCRIPTDIR, "src", "unowallet")):  # special case
                     transifex_cfg_path = os.path.join(os.path.expanduser("~"), ".transifex")
                     if os.path.exists(transifex_cfg_path):
-                        os.system("{} docker cp {} federatednodeuno_unowallet_1:/root/.transifex".format(SUDO_CMD, transifex_cfg_path))
-                    os.system("{} docker exec -i -t federatednodeuno_unowallet_1 bash -c \"cd /unowallet/src ".format(SUDO_CMD) +
+                        os.system("{} docker cp {} unonode_unowallet_1:/root/.transifex".format(SUDO_CMD, transifex_cfg_path))
+                    os.system("{} docker exec -i -t unonode_unowallet_1 bash -c \"cd /unowallet/src ".format(SUDO_CMD) +
                               "&& bower --allow-root update && cd /unowallet && npm update && grunt build\"")
                     if not os.path.exists(transifex_cfg_path):
                         print("NOTE: Did not update locales because there is no .transifex file in your home directory")
