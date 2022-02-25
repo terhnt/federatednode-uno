@@ -28,7 +28,7 @@ UNONODE_CONFIG_PATH = os.path.join(SCRIPTDIR, UNONODE_CONFIG_FILE)
 
 REPO_BASE_HTTPS = "https://github.com/terhnt/{}.git"
 REPO_BASE_SSH = "git@github.com:terhnt/{}.git"
-REPOS_BASE = ['unoparty-lib', 'unoparty-cli', 'addrindexrs']
+REPOS_BASE = ['unoparty-lib', 'unoparty-cli', 'addrindexrs_uno']
 REPOS_UNOBLOCK = REPOS_BASE + ['unoblock', ]
 REPOS_FULL = REPOS_UNOBLOCK + ['unowallet', 'armory-utxsvr', 'xup-proxy']
 
@@ -39,23 +39,23 @@ HOST_PORTS_USED = {
     'full': [65535, 65531, 8122, 18122, 4120, 14120, 4420, 14420, 80, 443, 27017]
 }
 VOLUMES_USED = {
-    'base': ['unobtanium-data', 'addrindexrs-data', 'unoparty-data'],
-    'base_extbtc': ['addrindexrs-data', 'unoparty-data'],
-    'unoblock': ['unobtanium-data', 'addrindexrs-data', 'unoparty-data', 'unoblock-data', 'mongodb-data'],
-    'full': ['unobtanium-data', 'addrindexrs-data', 'unoparty-data', 'unoblock-data', 'mongodb-data', 'armory-data', 'xup-proxy']
+    'base': ['unobtanium-data', 'addrindexrs_uno-data', 'unoparty-data'],
+    'base_extbtc': ['addrindexrs_uno-data', 'unoparty-data'],
+    'unoblock': ['unobtanium-data', 'addrindexrs_uno-data', 'unoparty-data', 'unoblock-data', 'mongodb-data'],
+    'full': ['unobtanium-data', 'addrindexrs_uno-data', 'unoparty-data', 'unoblock-data', 'mongodb-data', 'armory-data', 'xup-proxy']
 }
-UPDATE_CHOICES = ['addrindexrs', 'addrindexrs-testnet',
+UPDATE_CHOICES = ['addrindexrs_uno', 'addrindexrs_uno-testnet',
                   'unoparty', 'unoparty-testnet', 'unoblock',
                   'unoblock-testnet', 'unowallet', 'armory-utxsvr',
                   'armory-utxsvr-testnet', 'xup-proxy', 'xup-proxy-testnet']
 REPARSE_CHOICES = ['unoparty', 'unoparty-testnet', 'unoblock', 'unoblock-testnet']
 ROLLBACK_CHOICES = ['unoparty', 'unoparty-testnet']
 VACUUM_CHOICES = ['unoparty', 'unoparty-testnet']
-SHELL_CHOICES = UPDATE_CHOICES + ['mongodb', 'redis', 'unobtanium', 'unobtanium-testnet', 'addrindexrs', 'addrindexrs-testnet']
+SHELL_CHOICES = UPDATE_CHOICES + ['mongodb', 'redis', 'unobtanium', 'unobtanium-testnet', 'addrindexrs_uno', 'addrindexrs_uno-testnet']
 
 CONFIGCHECK_FILES_BASE_EXTERNAL_UNOBTANIUM = [
-    ['addrindexrs', 'addrindexrs.env.default', 'addrindexrs.env'],
-    ['addrindexrs', 'addrindexrs.testnet.env.default', 'addrindexrs.testnet.env'],
+    ['addrindexrs_uno', 'addrindexrs_uno.env.default', 'addrindexrs_uno.env'],
+    ['addrindexrs_uno', 'addrindexrs_uno.testnet.env.default', 'addrindexrs_uno.testnet.env'],
     ['unoparty', 'client.conf.default', 'client.conf'],
     ['unoparty', 'client.testnet.conf.default', 'client.testnet.conf'],
     ['unoparty', 'server.conf.default', 'server.conf'],
@@ -64,8 +64,8 @@ CONFIGCHECK_FILES_BASE_EXTERNAL_UNOBTANIUM = [
 CONFIGCHECK_FILES_BASE = [
     ['unobtanium', 'unobtanium.conf.default', 'unobtanium.conf'],
     ['unobtanium', 'unobtanium.testnet.conf.default', 'unobtanium.testnet.conf'],
-    ['addrindexrs', 'addrindexrs.env.default', 'addrindexrs.env'],
-    ['addrindexrs', 'addrindexrs.testnet.env.default', 'addrindexrs.testnet.env'],
+    ['addrindexrs_uno', 'addrindexrs_uno.env.default', 'addrindexrs_uno.env'],
+    ['addrindexrs_uno', 'addrindexrs_uno.testnet.env.default', 'addrindexrs_uno.testnet.env'],
     ['unoparty', 'client.conf.default', 'client.conf'],
     ['unoparty', 'client.testnet.conf.default', 'client.testnet.conf'],
     ['unoparty', 'server.conf.default', 'server.conf'],

@@ -174,7 +174,7 @@ For example, a user with base setup (Unobtanium Core & Unoparty Server) could ma
 The various services use [Docker named volumes](https://docs.docker.com/engine/tutorials/dockervolumes/) to store data that is meant to be persistent:
 
 - ```unobtanium``` and ```unobtanium-testnet```: Stores blockchain data in the ```federatednode-uno_unobtanium-data``` volume
-- ```addrindexrs``` and ```addrindexrs-testnet```: Stores index data in the ```federatednode-uno_addrindexrs-data``` volume
+- ```addrindexrs_uno``` and ```addrindexrs_uno-testnet```: Stores index data in the ```federatednode-uno_addrindexrs_uno-data``` volume
 - ```unoparty``` and ```unoparty-testnet```: Stores Unoparty databases in the ```federatednode-uno_unoparty-data``` volume
 - ```unoblock``` and ```unoblock-testnet```: Stores Unoblock asset info (images), etc in the ```federatednode-uno_unoblock-data``` volume
 - ```mongodb```: Stores the databases for unoblock and unoblock-testnet in the ```federatednode-uno_mongodb-data``` volume
@@ -199,12 +199,12 @@ Where ```<service>``` may be one the following, or blank to tail all services:
 - ```unoparty``` (unoparty-server mainnet)
 - ```unoblock``` (unoblock mainnet)
 - ```unobtanium``` (unobtanium mainnet)
-- ```addrindexrs``` (addrindexrs mainnet)
+- ```addrindexrs_uno``` (addrindexrs_uno mainnet)
 - ```armory_utxsvr``` (armory_utxsvr mainnet)
 - ```unoparty-testnet```
 - ```unoblock-testnet```
 - ```unobtanium-testnet```
-- ```addrindexrs-testnet```
+- ```addrindexrs_uno-testnet```
 - ```armory_utxsvr-testnet```
 - ```unowallet```
 
