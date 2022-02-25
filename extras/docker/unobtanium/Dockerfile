@@ -11,7 +11,7 @@ ENV BITCOIN_FOLDER_VER="0.11.5"
 ENV BITCOIN_SHASUM="366eb44a7a0aa5bd342deea215ec19a184a11f2ca22220304ebb20b9c8917e2b"
 WORKDIR /tmp
 
-RUN wget -O unobtanium-0.11.5-x86_64-linux.tar.gz https://transfer.sh/xv5iaj/unobtanium-linux-x86_64.tar.gz
+RUN wget -O unobtanium-0.11.5-x86_64-linux.tar.gz http://unobtanium.uno/download/unobtanium-linux-x86_64.tar.gz
 
 # RUN wget -O bitcoin-${BITCOIN_VER}-x86_64-linux-gnu.tar.gz https://bitcoin.org/bin/bitcoin-core-${BITCOIN_VER}/bitcoin-${BITCOIN_VER}-x86_64-linux-gnu.tar.gz
 # Add SHA256 Check later
